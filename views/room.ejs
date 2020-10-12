@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      const ROOM_ID = "<%= roomId %>";
+    </script>
+    <script
+      src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"
+      defer
+    ></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="script.js" defer></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+
+    <title>Document</title>
+    <style>
+      #video-grid {
+        /* display: grid;
+        grid-template-columns: repeat(auto-fill, 50%);
+        grid-auto-rows: 500px;
+        justify-content: space-between; */
+      }
+
+      .video-container {
+        margin-top: 100px;
+      }
+
+      .buttons-container {
+        margin-top: 50px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .control-button {
+        margin: 10px;
+      }
+      video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row video-container">
+      <div class="col-md-2">
+        <div id="message-container"></div>
+        <form id="send-container">
+          <input type="text" id="message-input" />
+          <button type="submit" id="send-button">Send</button>
+        </form>
+      </div>
+      <div id="video-grid" class="col-md-8"></div>
+      <div class="col-md-2"></div>
+    </div>
+    <div class="row buttons-container">
+      <button class="control-button" id="share-button">Share screen</button>
+      <button class="control-button" id="mute-button">
+        <svg
+          width="1em"
+          height="1em"
+          viewBox="0 0 16 16"
+          class="bi bi-mic"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"
+          />
+          <path
+            fill-rule="evenodd"
+            d="M10 8V3a2 2 0 1 0-4 0v5a2 2 0 1 0 4 0zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3z"
+          />
+        </svg>
+      </button>
+      <button id="cam-button" class="control-button">
+        <svg
+          width="1em"
+          height="1em"
+          viewBox="0 0 16 16"
+          class="bi bi-camera-video-fill"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5z"
+          />
+        </svg>
+      </button>
+    </div>
+  </body>
+</html>
