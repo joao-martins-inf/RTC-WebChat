@@ -1,33 +1,26 @@
-const express = require("express");
-const app = express();
-const server = require("http").Server(app);
-const io = require("socket.io")(server);
-const { v4: uuidV4 } = require("uuid");
-
-app.set("view engine", "ejs");
-app.use(express.static("public"));
-
-app.get("/", (req, res) => {
-  res.redirect(`/${uuidV4()}`);
-});
-
-app.get("/:room", (req, res) => {
-  res.render("room", { roomId: req.params.room });
-});
+const http = require("http");
+const service = require("restana")();
+const files = require("serve-static");
+const path = require("path");
+const socket = require("socket.io");
+const server = http.createServer(service);
+const io = socket(server);
 
 io.on("connection", (socket) => {
-  socket.on("join-room", (roomId, userId) => {
-    socket.join(roomId);
-    socket.to(roomId).broadcast.emit("user-connected", userId);
-
+  socket.on("join room", (roomID, userId) => {
+    socket.join(roomID);
+    socket.to(roomID).broadcast.emit("user connected", userId);
     socket.on("disconnect", () => {
-      socket.to(roomId).broadcast.emit("user-disconnected", userId);
+      socket.to(roomID).broadcast.emit("user disconnected", userId);
     });
 
-    socket.on("send-chat-message", (message) => {
+    //chat stuff
+    /* socket.on("send-chat-message", (message) => {
       socket.broadcast.emit("chat-message", { message: message, userId });
-    });
+    }); */
   });
 });
 
-server.listen(1234);
+server.listen(1234, "0.0.0.0", function () {
+  console.log("running");
+});
